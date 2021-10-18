@@ -435,6 +435,57 @@
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>dw_comercio</name>
+    <server>localhost</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>dw_comercio</database>
+    <port>5432</port>
+    <username>postgres</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce10bec6fd8a</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>5432</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
       <from>If field value is null</from>
@@ -477,12 +528,6 @@
         <mask/>
         <set_empty_string>N</set_empty_string>
       </field>
-      <field>
-        <name>id</name>
-        <value/>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -509,7 +554,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection/>
+    <connection>dw_comercio</connection>
     <commit>100</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
@@ -521,20 +566,9 @@
         <condition>=</condition>
         <name2/>
       </key>
-      <key>
-        <name>id</name>
-        <field>id_categoria</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
       <value>
         <name>tag</name>
         <rename>tag</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>id_categoria</name>
-        <rename>id</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -598,7 +632,7 @@
     </partitioning>
     <filename>H:\FPUNA\BDIII\Proyecto\datos\categorias.csv</filename>
     <filename_field/>
-    <rownum_field>id</rownum_field>
+    <rownum_field/>
     <include_filename>N</include_filename>
     <separator>\n</separator>
     <enclosure>"</enclosure>
