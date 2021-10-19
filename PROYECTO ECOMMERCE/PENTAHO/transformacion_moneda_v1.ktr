@@ -6,6 +6,7 @@
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -417,7 +418,7 @@
     <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
-    <step_performance_capturing_size_limit/>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
     <dependencies>
     </dependencies>
     <partitionschemas>
@@ -426,10 +427,10 @@
     </slaveservers>
     <clusterschemas>
     </clusterschemas>
-    <created_user/>
-    <created_date>2021/10/18 12:36:26.044</created_date>
-    <modified_user/>
-    <modified_date>2021/10/18 12:36:26.044</modified_date>
+    <created_user>-</created_user>
+    <created_date>2021/10/15 22:41:16.931</created_date>
+    <modified_user>-</modified_user>
+    <modified_date>2021/10/15 22:41:16.931</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -488,24 +489,19 @@
   </connection>
   <order>
     <hop>
-      <from>si_moneda_null</from>
-      <to>monedas_unicas</to>
+      <from>MONEDAS_DEL_MUNDO</from>
+      <to>CONV. MAYUSCULAS</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>extracción_monedas</from>
-      <to>si_moneda_null</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>monedas_unicas</from>
+      <from>CONV. MAYUSCULAS</from>
       <to>Insert / update</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>si_moneda_null</name>
-    <type>IfNull</type>
+    <name>CONV. MAYUSCULAS</name>
+    <type>StringOperations</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -514,19 +510,19 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <replaceAllByValue/>
-    <replaceAllMask/>
-    <selectFields>Y</selectFields>
-    <selectValuesType>N</selectValuesType>
-    <setEmptyStringAll>N</setEmptyStringAll>
-    <valuetypes>
-      </valuetypes>
     <fields>
       <field>
-        <name>currency_buyer</name>
-        <value>n/a</value>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
+        <in_stream_name>Moneda</in_stream_name>
+        <out_stream_name>DESC_MONEDA</out_stream_name>
+        <trim_type>none</trim_type>
+        <lower_upper>upper</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>N</init_cap>
+        <mask_xml>None</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
       </field>
     </fields>
     <attributes/>
@@ -538,566 +534,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>752</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>monedas_unicas</name>
-    <type>UniqueRowsByHashSet</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <store_values>N</store_values>
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description/>
-    <fields>
-      <field>
-        <name>currency_buyer</name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>960</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>extracción_monedas</name>
-    <type>CsvInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <filename>H:\FPUNA\BDIII\Proyecto\datos\productos_verano.csv</filename>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>,</separator>
-    <enclosure>"</enclosure>
-    <header>Y</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>N</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>Y</newline_possible>
-    <format>mixed</format>
-    <encoding/>
-    <fields>
-      <field>
-        <name>title</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>339</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>title_orig</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>241</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>price</name>
-        <type>Number</type>
-        <format>#,###,###.#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>retail_price</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>currency_buyer</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>3</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>units_sold</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>uses_ad_boosts</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>rating</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>G</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>rating_count</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>rating_five_count</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>rating_four_count</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>rating_three_count</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>rating_two_count</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>rating_one_count</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>badges_count</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>badge_local_product</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>badge_product_quality</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>badge_fast_shipping</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>tags</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>318</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>product_color</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>19</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>product_variation_size_id</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>13</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>product_variation_inventory</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>shipping_option_name</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>20</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>shipping_option_price</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>shipping_is_express</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>countries_shipped_to</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>inventory_total</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>has_urgency_banner</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>urgency_text</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>20</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>origin_country</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>merchant_title</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>36</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>merchant_name</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>51</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>merchant_info_subtitle</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>55</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>merchant_rating_count</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>merchant_rating</name>
-        <type>Number</type>
-        <format>#,###,###.#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>merchant_id</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>24</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>merchant_has_profile_picture</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>merchant_profile_picture</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>99</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>product_url</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>47</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>product_picture</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>76</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>product_id</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>24</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>theme</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>6</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>crawl_month</name>
-        <type>String</type>
-        <format/>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>7</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>id_incremental</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>G</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>544</xloc>
-      <yloc>288</yloc>
+      <xloc>320</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1119,36 +557,36 @@
       <schema>public</schema>
       <table>dim_moneda</table>
       <key>
-        <name>currency_buyer</name>
-        <field>simbolo</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>currency_buyer</name>
+        <name>Abreviatura</name>
         <field>cod_moneda</field>
         <condition>=</condition>
         <name2/>
       </key>
       <key>
-        <name>currency_buyer</name>
+        <name>Símbolo</name>
+        <field>simbolo</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>DESC_MONEDA</name>
         <field>descripcion_moneda</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
+        <name>cod_moneda</name>
+        <rename>Abreviatura</rename>
+        <update>Y</update>
+      </value>
+      <value>
         <name>simbolo</name>
-        <rename>currency_buyer</rename>
+        <rename>Símbolo</rename>
         <update>Y</update>
       </value>
       <value>
         <name>descripcion_moneda</name>
-        <rename>currency_buyer</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>cod_moneda</name>
-        <rename>currency_buyer</rename>
+        <rename>DESC_MONEDA</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -1161,8 +599,82 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1104</xloc>
-      <yloc>288</yloc>
+      <xloc>496</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>MONEDAS_DEL_MUNDO</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename>H:\FPUNA\BDIII\Proyecto\git\BD3-ECOMMERCE-main\PROYECTO ECOMMERCE\datos-20210918T223410Z-001\datos\monedas_del_mundo.csv</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <format>mixed</format>
+    <encoding>UTF-8</encoding>
+    <fields>
+      <field>
+        <name>Moneda</name>
+        <type>String</type>
+        <format/>
+        <currency>G</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>100</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Abreviatura</name>
+        <type>String</type>
+        <format/>
+        <currency>G</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>3</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Símbolo</name>
+        <type>String</type>
+        <format/>
+        <currency>G</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>4</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>112</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
