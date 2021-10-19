@@ -493,18 +493,13 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Extracción Datos Tiempo</from>
-      <to>SEPARA DATOS</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
       <from>ELIMINA DUPLICADOS</from>
       <to>Comparar_tabla_con_csv</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Extracción Datos Tiempo</from>
-      <to>SEPARA DATOS</to>
+      <to>SI NO ES NULL</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -527,7 +522,76 @@
       <to>Comparar_tabla_con_csv</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>SI NO ES NULL</from>
+      <to>SEPARA DATOS</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>Comparar_tabla_con_csv</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>tabla_existente</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>año_t</name>
+        <field>anho</field>
+      </key>
+      <key>
+        <name>mes_t</name>
+        <field>mes</field>
+      </key>
+      <value>
+        <name>id_tiempo</name>
+        <rename>id_tiempo</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>anho</name>
+        <rename>anho</rename>
+        <default>AAAA</default>
+        <type>String</type>
+      </value>
+      <value>
+        <name>mes</name>
+        <rename>mes</rename>
+        <default>MM</default>
+        <type>String</type>
+      </value>
+      <value>
+        <name>dia</name>
+        <rename>dia</rename>
+        <default>DD</default>
+        <type>String</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>ELIMINA DUPLICADOS</name>
     <type>UniqueRowsByHashSet</type>
@@ -1079,60 +1143,6 @@
     </GUI>
   </step>
   <step>
-    <name>Insert / update</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_compercio</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_tiempo</table>
-      <key>
-        <name>año_t</name>
-        <field>anho</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>mes_t</name>
-        <field>mes</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>anho</name>
-        <rename>año_t</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>mes</name>
-        <rename>mes_t</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>704</xloc>
-      <yloc>0</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>SEPARA DATOS</name>
     <type>FieldSplitter</type>
     <description/>
@@ -1202,72 +1212,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
+      <xloc>352</xloc>
       <yloc>16</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Comparar_tabla_con_csv</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>tabla_existente</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>año_t</name>
-        <field>anho</field>
-      </key>
-      <key>
-        <name>mes_t</name>
-        <field>mes</field>
-      </key>
-      <value>
-        <name>id_tiempo</name>
-        <rename>id_tiempo</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>anho</name>
-        <rename>anho</rename>
-        <default>AAAA</default>
-        <type>String</type>
-      </value>
-      <value>
-        <name>mes</name>
-        <rename>mes</rename>
-        <default>MM</default>
-        <type>String</type>
-      </value>
-      <value>
-        <name>dia</name>
-        <rename>dia</rename>
-        <default>DD</default>
-        <type>String</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>496</xloc>
-      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1566,6 +1512,41 @@ FROM "public".dim_tiempo
     <GUI>
       <xloc>80</xloc>
       <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>SI NO ES NULL</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>SEPARA DATOS</send_true_to>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>crawl_month</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>224</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
