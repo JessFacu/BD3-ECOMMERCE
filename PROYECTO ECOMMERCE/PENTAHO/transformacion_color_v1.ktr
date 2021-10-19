@@ -430,20 +430,20 @@
     <created_date>2021/10/15 20:19:50.053</created_date>
     <modified_user>-</modified_user>
     <modified_date>2021/10/15 20:19:50.053</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>dw_comercio</name>
+    <name>dw_comercioop</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>dw_comercio</database>
     <port>5432</port>
     <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4bb16bd64d980aac9</password>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce10bec6fd8a</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -509,6 +509,79 @@
     </hop>
   </order>
   <step>
+    <name>CONV. MAYUSCULAS</name>
+    <type>StringOperations</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>product_color</in_stream_name>
+        <out_stream_name>color_upper</out_stream_name>
+        <trim_type>none</trim_type>
+        <lower_upper>upper</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>N</init_cap>
+        <mask_xml>None</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>400</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>ELIMINA DUPLICADOS</name>
+    <type>UniqueRowsByHashSet</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <store_values>N</store_values>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>color_upper</name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>528</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Extraccion Datos Colores</name>
     <type>CsvInput</type>
     <description/>
@@ -519,7 +592,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:\jess\BD\BD3\datos-20210918T223410Z-001\datos\summer-products-with-rating-and-performance_2020-08.csv</filename>
+    <filename>H:\FPUNA\BDIII\Proyecto\datos\productos_verano.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -558,7 +631,7 @@
       </field>
       <field>
         <name>price</name>
-        <type>Number</type>
+        <type>String</type>
         <format>#.#</format>
         <currency>G</currency>
         <decimal>.</decimal>
@@ -910,7 +983,7 @@
       </field>
       <field>
         <name>merchant_rating</name>
-        <type>Number</type>
+        <type>String</type>
         <format>#.#</format>
         <currency>G</currency>
         <decimal>.</decimal>
@@ -1033,7 +1106,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>dw_comercio</connection>
+    <connection>dw_comercioop</connection>
     <commit>100</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
@@ -1062,39 +1135,6 @@
     <GUI>
       <xloc>720</xloc>
       <yloc>320</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>ELIMINA DUPLICADOS</name>
-    <type>UniqueRowsByHashSet</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <store_values>N</store_values>
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description/>
-    <fields>
-      <field>
-        <name>color_upper</name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1130,46 +1170,6 @@
     <GUI>
       <xloc>240</xloc>
       <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>CONV. MAYUSCULAS</name>
-    <type>StringOperations</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>product_color</in_stream_name>
-        <out_stream_name>color_upper</out_stream_name>
-        <trim_type>none</trim_type>
-        <lower_upper>upper</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>400</xloc>
-      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

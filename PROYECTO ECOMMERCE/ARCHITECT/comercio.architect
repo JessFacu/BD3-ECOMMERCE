@@ -4,18 +4,6 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Logical" value="PostgreSQL" />
-   <property key="Connection Type" value="PostgreSQL" />
-   <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/dw_comercio" />
-   <property key="UID" value="postgres" />
-   <property key="PWD" value="postgres" />
-   <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
-  </data-source>
-  <data-source id="DS2">
    <property key="Connection Type" value="PostgreSQL" />
    <property key="Logical" value="PlayPen Database" />
    <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/dw_comercio" />
@@ -27,7 +15,19 @@
    <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
   </data-source>
-  <data-source id="DS2">
+  <data-source id="DS0">
+   <property key="Connection Type" value="PostgreSQL" />
+   <property key="Logical" value="PlayPen Database" />
+   <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/dw_comercio" />
+   <property key="UID" value="postgres" />
+   <property key="PWD" value="postgres" />
+   <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
+  </data-source>
+  <data-source id="DS0">
    <property key="Connection Type" value="PostgreSQL" />
    <property key="Logical" value="PlayPen Database" />
    <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/dw_comercio" />
@@ -41,13 +41,13 @@
   </data-source>
  </project-data-sources>
  <source-databases>
-  <database id="DB0" populated="true" UUID="5abb8b02-e913-4c66-8673-9ab57da158ce" dbcs-ref="DS2" name="PlayPen Database" physicalName="dw_comercio" sql-exception="ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: Couldn&apos;t connect to database: FATAL: la autentificación password falló para el usuario «postgres» (pgjdbc: autodetected server-encoding to be ISO-8859-1, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)" >
+  <database id="DB0" populated="true" UUID="5abb8b02-e913-4c66-8673-9ab57da158ce" dbcs-ref="DS0" name="PlayPen Database" physicalName="dw_comercio" sql-exception="ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: Couldn&apos;t connect to database: FATAL: la autentificación password falló para el usuario «postgres» (pgjdbc: autodetected server-encoding to be ISO-8859-1, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)" >
    <catalog id="CAT1" populated="true" UUID="6efd9b9e-72ed-4efc-a9b5-664a8641fd20" name="dw_comercio" nativeTerm="database" physicalName="dw_comercio" >
    </catalog>
    <relationships>
    </relationships>
   </database>
-  <database id="DB2" populated="true" UUID="d1c250b8-a6e5-4e21-904f-bf23281f82a9" dbcs-ref="DS2" name="PlayPen Database" physicalName="PostgreSQL" >
+  <database id="DB2" populated="true" UUID="d1c250b8-a6e5-4e21-904f-bf23281f82a9" dbcs-ref="DS0" name="PlayPen Database" physicalName="PostgreSQL" >
    <catalog id="CAT3" populated="true" UUID="49936c01-01a4-45b5-a9b4-17b70df94b6d" name="eCommerce_2" nativeTerm="database" physicalName="eCommerce_2" >
     <schema id="SCH4" populated="false" UUID="3423abf3-066c-4ea1-8a7f-65f128f5fe4a" name="information_schema" nativeTerm="schema" physicalName="information_schema" >
     </schema>
@@ -67,7 +67,7 @@
     <column id="COL9" populated="true" UUID="ef052615-df41-4a3d-8bf9-4656c735f39c" autoIncrement="true" autoIncrementSequenceName="dim_producto_id_producto_seq" defaultValue="" name="id_producto" nullable="0" physicalName="id_producto" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL10" populated="true" UUID="8cf0bdab-1117-4e9d-9b32-bee513d63b8f" autoIncrement="false" autoIncrementSequenceName="dim_producto_descripcion_producto_seq" defaultValue="" name="descripcion_producto" nullable="0" physicalName="descripcion_producto" precision="100" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL10" populated="true" UUID="8cf0bdab-1117-4e9d-9b32-bee513d63b8f" autoIncrement="false" autoIncrementSequenceName="dim_producto_descripcion_producto_seq" defaultValue="" name="descripcion_producto" nullable="0" physicalName="descripcion_producto" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL11" populated="true" UUID="61ade160-5cff-4b87-a80e-3fb4e24c6508" autoIncrement="false" autoIncrementSequenceName="dim_producto_costo_producto_seq" defaultValue="" name="costo_producto" nullable="0" physicalName="costo_producto" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
@@ -79,7 +79,7 @@
     <column id="COL13" populated="true" UUID="dd597ce7-7593-407e-a006-4ca05c564de4" autoIncrement="false" autoIncrementSequenceName="dim_producto_url_producto_seq" defaultValue="" name="url_producto" nullable="0" physicalName="url_producto" precision="500" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL14" populated="true" UUID="2816d2e7-e050-47b9-8a7a-73d0a8f2d095" autoIncrement="false" autoIncrementSequenceName="dim_producto_imagen_producto_seq" defaultValue="" name="imagen_producto" nullable="0" physicalName="imagen_producto" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2004" userDefinedTypeUUID="5c50e616-a448-40e1-abcd-5bfc04dcc607" >
+    <column id="COL14" populated="true" UUID="2816d2e7-e050-47b9-8a7a-73d0a8f2d095" autoIncrement="false" autoIncrementSequenceName="dim_producto_imagen_producto_seq" defaultValue="" name="imagen_producto" nullable="0" physicalName="imagen_producto" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL15" populated="true" UUID="9bd72c20-6ed9-4380-a566-d6b8e6d68ac7" autoIncrement="false" autoIncrementSequenceName="dim_producto_raiting_seq" defaultValue="" name="raiting" nullable="0" physicalName="raiting" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
@@ -371,10 +371,10 @@
    </relationship>
   </relationships>
  </target-database>
- <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="false" target-schema="public"> </ddl-generator>
+ <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="true" target-schema="public"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="0.9999999999999997" viewportX="0" viewportY="3" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="0.9999999999999997" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB8" x="523" y="20" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB26" x="96" y="341" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB31" x="102" y="424" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
