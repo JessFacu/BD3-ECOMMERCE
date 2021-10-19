@@ -488,11 +488,6 @@
   </connection>
   <order>
     <hop>
-      <from>ELIMINA DUPLICADOS</from>
-      <to>Insert / update</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
       <from>SI NO ES NULL</from>
       <to>CONV. MAYUSCULAS</to>
       <enabled>Y</enabled>
@@ -530,6 +525,16 @@
     <hop>
       <from>ELIMINA DUPLICADOS</from>
       <to>Comparar_tabla_con_csv</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>filtrar_no_existentes</from>
+      <to>filtrar_existentes</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>filtrar_existentes</from>
+      <to>modificar</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1121,49 +1126,6 @@
     </GUI>
   </step>
   <step>
-    <name>Insert / update</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_comercioop</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_color</table>
-      <key>
-        <name>color_upper</name>
-        <field>descripcion_color</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>descripcion_color</name>
-        <rename>color_upper</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>784</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>SI NO ES NULL</name>
     <type>FilterRows</type>
     <description/>
@@ -1202,7 +1164,7 @@
     <name>Comparar_tabla_con_csv</name>
     <type>StreamLookup</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -1228,7 +1190,7 @@
       <value>
         <name>descripcion_color</name>
         <rename>descripcion_color</rename>
-        <default/>
+        <default>n/a</default>
         <type>String</type>
       </value>
     </lookup>
@@ -1241,8 +1203,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>240</xloc>
-      <yloc>208</yloc>
+      <xloc>288</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1273,8 +1235,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>656</xloc>
-      <yloc>208</yloc>
+      <xloc>752</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1290,7 +1252,7 @@
       <schema_name/>
     </partitioning>
     <send_true_to>cargar_valores</send_true_to>
-    <send_false_to/>
+    <send_false_to>filtrar_existentes</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
@@ -1308,8 +1270,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
-      <yloc>208</yloc>
+      <xloc>592</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1351,8 +1313,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>816</xloc>
-      <yloc>208</yloc>
+      <xloc>896</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1433,8 +1395,104 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>32</xloc>
-      <yloc>208</yloc>
+      <xloc>80</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>modificar</name>
+    <type>Update</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dw_comercioop</connection>
+    <skip_lookup>N</skip_lookup>
+    <commit>100</commit>
+    <use_batch>N</use_batch>
+    <error_ignored>N</error_ignored>
+    <ignore_flag_field/>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_color</table>
+      <key>
+        <name>color_upper</name>
+        <field>descripcion_color</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_color</name>
+        <rename>id_color</rename>
+      </value>
+      <value>
+        <name>descripcion_color</name>
+        <rename>color_upper</rename>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>896</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>filtrar_existentes</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>modificar</send_true_to>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <conditions>
+          <condition>
+            <negated>N</negated>
+            <leftvalue>id_color</leftvalue>
+            <function>IS NOT NULL</function>
+            <rightvalue/>
+          </condition>
+          <condition>
+            <negated>N</negated>
+            <operator>AND</operator>
+            <leftvalue>descripcion_color</leftvalue>
+            <function>=</function>
+            <rightvalue>color_upper</rightvalue>
+          </condition>
+        </conditions>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>592</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

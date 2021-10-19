@@ -444,7 +444,7 @@
     <database>dw_comercio</database>
     <port>5432</port>
     <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce10bec6fd8a</password>
+    <password>Encrypted 2be98afc86aa7f2e4bb16bd64d980aac9</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -495,7 +495,7 @@
     </hop>
     <hop>
       <from>MAPEO DE CODIGOS</from>
-      <to>Insert / update</to>
+      <to>Comparar_tabla_con_csv</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -516,11 +516,31 @@
     <hop>
       <from>CODIGOS_PAISES</from>
       <to>CONV. MAYUSCULAS 2</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>CONV. MAYUSCULAS 2</from>
       <to>Insert / update 2</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>filtrar_no_existentes</from>
+      <to>modificar</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>filtrar_no_existentes</from>
+      <to>insertar_REGISTRO_NUEVO</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>tabla_existente</from>
+      <to>Comparar_tabla_con_csv</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Comparar_tabla_con_csv</from>
+      <to>filtrar_no_existentes</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -535,7 +555,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>H:\FPUNA\BDIII\Proyecto\git\BD3-ECOMMERCE-main\PROYECTO ECOMMERCE\datos-20210918T223410Z-001\datos\codigos_paises.csv</filename>
+    <filename>C:\Users\Jess\Documents\GitHub\PROYECTOS\BD3-ECOMMERCE\PROYECTO ECOMMERCE\datos-20210918T223410Z-001\datos\codigos_paises.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -582,8 +602,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>96</xloc>
-      <yloc>192</yloc>
+      <xloc>112</xloc>
+      <yloc>0</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -662,8 +682,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>240</xloc>
-      <yloc>192</yloc>
+      <xloc>256</xloc>
+      <yloc>0</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -711,7 +731,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>H:\FPUNA\BDIII\Proyecto\datos\productos_verano.csv</filename>
+    <filename>C:\Users\Jess\Documents\GitHub\PROYECTOS\BD3-ECOMMERCE\PROYECTO ECOMMERCE\datos-20210918T223410Z-001\datos\summer-products-with-rating-and-performance_2020-08.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -1215,60 +1235,6 @@
     </GUI>
   </step>
   <step>
-    <name>Insert / update</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_comercioop</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_pais</table>
-      <key>
-        <name>COD_PAIS</name>
-        <field>cod_pais</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>DESC_PAIS</name>
-        <field>descripcion</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>cod_pais</name>
-        <rename>COD_PAIS</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>descripcion</name>
-        <rename>DESC_PAIS</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>896</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Insert / update 2</name>
     <type>InsertUpdate</type>
     <description/>
@@ -1317,8 +1283,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>384</xloc>
-      <yloc>192</yloc>
+      <xloc>400</xloc>
+      <yloc>0</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1408,6 +1374,352 @@
     <GUI>
       <xloc>256</xloc>
       <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>filtrar_no_existentes</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>insertar_REGISTRO_NUEVO</send_true_to>
+    <send_false_to>modificar</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>id_pais</leftvalue>
+        <function>IS NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>752</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>insertar_REGISTRO_NUEVO</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dw_comercioop</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_pais</table>
+      <key>
+        <name>gentilicio</name>
+        <field>gentilicio</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>DESC_PAIS</name>
+        <field>descripcion</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>COD_PAIS</name>
+        <field>cod_pais</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>gentilicio</name>
+        <rename>gentilicio</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>descripcion</name>
+        <rename>DESC_PAIS</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>cod_pais</name>
+        <rename>COD_PAIS</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1008</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>modificar</name>
+    <type>Update</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dw_comercioop</connection>
+    <skip_lookup>N</skip_lookup>
+    <commit>100</commit>
+    <use_batch>N</use_batch>
+    <error_ignored>N</error_ignored>
+    <ignore_flag_field/>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_pais</table>
+      <key>
+        <name>COD_PAIS</name>
+        <field>cod_pais</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>gentilicio</name>
+        <rename>gentilicio</rename>
+      </value>
+      <value>
+        <name>descripcion</name>
+        <rename>descripcion</rename>
+      </value>
+      <value>
+        <name>cod_pais</name>
+        <rename>COD_PAIS</rename>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1008</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Comparar_tabla_con_csv</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>tabla_existente</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>COD_PAIS</name>
+        <field>codigo_pais</field>
+      </key>
+      <value>
+        <name>id_pais</name>
+        <rename>id_pais</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>gentilicio</name>
+        <rename>gentilicio</rename>
+        <default>n/a</default>
+        <type>String</type>
+      </value>
+      <value>
+        <name>descripcion</name>
+        <rename>descripcion</rename>
+        <default>n/a</default>
+        <type>String</type>
+      </value>
+      <value>
+        <name>codigo_pais</name>
+        <rename>codigo_pais</rename>
+        <default>n/a</default>
+        <type>String</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>560</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>tabla_existente</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dw_comercioop</connection>
+    <sql>SELECT
+  id_pais
+, gentilicio
+, descripcion
+, cod_pais as codigo_pais
+FROM "public".dim_pais
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>id_pais</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>tabla_existente</origin>
+        <comments>id_pais</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_PY</date_format_locale>
+        <date_format_timezone>America/Asuncion</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>gentilicio</name>
+        <length>50</length>
+        <precision>-1</precision>
+        <origin>tabla_existente</origin>
+        <comments>gentilicio</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_PY</date_format_locale>
+        <date_format_timezone>America/Asuncion</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>descripcion</name>
+        <length>100</length>
+        <precision>-1</precision>
+        <origin>tabla_existente</origin>
+        <comments>descripcion</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_PY</date_format_locale>
+        <date_format_timezone>America/Asuncion</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>codigo_pais</name>
+        <length>2</length>
+        <precision>-1</precision>
+        <origin>tabla_existente</origin>
+        <comments>codigo_pais</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_PY</date_format_locale>
+        <date_format_timezone>America/Asuncion</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>112</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
