@@ -443,7 +443,7 @@
     <database>dw_comercio</database>
     <port>5432</port>
     <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce10bec6fd8a</password>
+    <password>Encrypted 2be98afc86aa7f2e4bb16bd64d980aac9</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -579,6 +579,78 @@
     </hop>
   </order>
   <step>
+    <name>Comparar_tabla_con_csv</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>tabla_existente</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>tag</name>
+        <field>tag</field>
+      </key>
+      <value>
+        <name>id_categoria</name>
+        <rename>id_categoria</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>tag</name>
+        <rename>tag</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>checksum</name>
+        <rename>checksum</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>fecha_fin</name>
+        <rename>fecha_fin</rename>
+        <default/>
+        <type>Date</type>
+      </value>
+      <value>
+        <name>actual</name>
+        <rename>actual</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>anterior</name>
+        <rename>anterior</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>336</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Extracción Datos Categorias</name>
     <type>CsvInput</type>
     <description/>
@@ -589,7 +661,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>H:\FPUNA\BDIII\Proyecto\datos\categorias.csv</filename>
+    <filename>C:\Users\Jess\Documents\GitHub\PROYECTOS\BD3-ECOMMERCE\PROYECTO ECOMMERCE\datos-20210918T223410Z-001\datos\unique-categories.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -631,79 +703,6 @@
     </GUI>
   </step>
   <step>
-    <name>si_categoria_nula</name>
-    <type>IfNull</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <replaceAllByValue/>
-    <replaceAllMask/>
-    <selectFields>Y</selectFields>
-    <selectValuesType>N</selectValuesType>
-    <setEmptyStringAll>N</setEmptyStringAll>
-    <valuetypes>
-      </valuetypes>
-    <fields>
-      <field>
-        <name>tag</name>
-        <value>n/a</value>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>368</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>categorias_unicas</name>
-    <type>UniqueRowsByHashSet</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <store_values>N</store_values>
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description/>
-    <fields>
-      <field>
-        <name>tag</name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>656</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>cargar_checksum</name>
     <type>CheckSum</type>
     <description/>
@@ -719,13 +718,6 @@
     <resultType>hexadecimal</resultType>
     <compatibilityMode>N</compatibilityMode>
     <oldChecksumBehaviour>N</oldChecksumBehaviour>
-    <fieldSeparatorString/>
-    <checksumtype>MD5</checksumtype>
-    <resultfieldName>checksum</resultfieldName>
-    <resultType>hexadecimal</resultType>
-    <compatibilityMode>N</compatibilityMode>
-    <oldChecksumBehaviour>N</oldChecksumBehaviour>
-    <fieldSeparatorString/>
     <fields>
       <field>
         <name>tag</name>
@@ -809,8 +801,8 @@
     </GUI>
   </step>
   <step>
-    <name>tabla_existente</name>
-    <type>TableInput</type>
+    <name>cargar_nuevos_valores</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -819,162 +811,27 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>dw_comerciooop</connection>
-    <sql>SELECT
-  id_categoria
-, tag
-, checksum
-, fecha_fin
-, actual
-, anterior
-FROM "public".dim_categoria
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>id_categoria</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Table input</origin>
-        <comments>id_categoria</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_PY</date_format_locale>
-        <date_format_timezone>America/Asuncion</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>tag</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>tag</comments>
-        <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_PY</date_format_locale>
-        <date_format_timezone>America/Asuncion</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>checksum</name>
-        <length>-1</length>
-        <precision>0</precision>
-        <origin>Table input</origin>
-        <comments>checksum</comments>
-        <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_PY</date_format_locale>
-        <date_format_timezone>America/Asuncion</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Date</type>
-        <storagetype>normal</storagetype>
-        <name>fecha_fin</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>fecha_fin</comments>
-        <conversion_Mask/>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_PY</date_format_locale>
-        <date_format_timezone>America/Asuncion</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
+    <fields>
+      <field>
         <name>actual</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Table input</origin>
-        <comments>actual</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_PY</date_format_locale>
-        <date_format_timezone>America/Asuncion</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
+      </field>
+      <field>
         <name>anterior</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Table input</origin>
-        <comments>anterior</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>,</decimal_symbol>
-        <grouping_symbol>.</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>es_PY</date_format_locale>
-        <date_format_timezone>America/Asuncion</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
+      </field>
+      <field>
+        <name>checksum</name>
+      </field>
+      <field>
+        <name>fecha_fin</name>
+      </field>
+      <field>
+        <name>tag</name>
+      </field>
+      <field>
+        <name>id_categoria</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -984,80 +841,8 @@ FROM "public".dim_categoria
       </output>
     </remotesteps>
     <GUI>
-      <xloc>144</xloc>
-      <yloc>192</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Comparar_tabla_con_csv</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>tabla_existente</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>tag</name>
-        <field>tag</field>
-      </key>
-      <value>
-        <name>id_categoria</name>
-        <rename>id_categoria</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>tag</name>
-        <rename>tag</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>checksum</name>
-        <rename>checksum</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>fecha_fin</name>
-        <rename>fecha_fin</rename>
-        <default/>
-        <type>Date</type>
-      </value>
-      <value>
-        <name>actual</name>
-        <rename>actual</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>anterior</name>
-        <rename>anterior</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>336</xloc>
-      <yloc>192</yloc>
+      <xloc>480</xloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1075,23 +860,18 @@ FROM "public".dim_categoria
     <fields>
       <field>
         <name>actual</name>
-        <rename/>
       </field>
       <field>
         <name>anterior</name>
-        <rename/>
       </field>
       <field>
         <name>checksum</name>
-        <rename/>
       </field>
       <field>
         <name>fecha_fin</name>
-        <rename/>
       </field>
       <field>
         <name>tag</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1110,8 +890,8 @@ FROM "public".dim_categoria
     </GUI>
   </step>
   <step>
-    <name>filtrar_no_existentes</name>
-    <type>FilterRows</type>
+    <name>categorias_unicas</name>
+    <type>UniqueRowsByHashSet</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1120,45 +900,12 @@ FROM "public".dim_categoria
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>cargar_valores</send_true_to>
-    <send_false_to>filtrar_checksum_igual</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>id_categoria</leftvalue>
-        <function>IS NULL</function>
-        <rightvalue/>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>544</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>ordenar_ids</name>
-    <type>SortedMerge</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
+    <store_values>N</store_values>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
     <fields>
       <field>
-        <name>id_categoria</name>
-        <ascending>N</ascending>
+        <name>tag</name>
       </field>
     </fields>
     <attributes/>
@@ -1170,8 +917,8 @@ FROM "public".dim_categoria
       </output>
     </remotesteps>
     <GUI>
-      <xloc>640</xloc>
-      <yloc>576</yloc>
+      <xloc>656</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1211,8 +958,8 @@ FROM "public".dim_categoria
     </GUI>
   </step>
   <step>
-    <name>insertar_sin_modificar</name>
-    <type>SelectValues</type>
+    <name>filtrar_no_existentes</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1221,33 +968,16 @@ FROM "public".dim_categoria
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <fields>
-      <field>
-        <name>actual</name>
-        <rename/>
-      </field>
-      <field>
-        <name>anterior</name>
-        <rename/>
-      </field>
-      <field>
-        <name>checksum</name>
-        <rename/>
-      </field>
-      <field>
-        <name>fecha_fin</name>
-        <rename/>
-      </field>
-      <field>
-        <name>tag</name>
-        <rename/>
-      </field>
-      <field>
-        <name>id_categoria</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
+    <send_true_to>cargar_valores</send_true_to>
+    <send_false_to>filtrar_checksum_igual</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>id_categoria</leftvalue>
+        <function>IS NULL</function>
+        <rightvalue/>
+      </condition>
+    </compare>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1257,310 +987,7 @@ FROM "public".dim_categoria
       </output>
     </remotesteps>
     <GUI>
-      <xloc>640</xloc>
-      <yloc>320</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>obtener_fecha_fin_anterior</name>
-    <type>SystemInfo</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>fecha_vigencia</name>
-        <type>today end</type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>448</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>modificar_anterior</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>checksum_1</name>
-        <rename>checksum</rename>
-      </field>
-      <field>
-        <name>tag_1</name>
-        <rename>tag</rename>
-      </field>
-      <field>
-        <name>anterior</name>
-        <rename>actual</rename>
-      </field>
-      <field>
-        <name>fecha_vigencia</name>
-        <rename>fecha_fin</rename>
-      </field>
-      <field>
-        <name>id_categoria</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>784</xloc>
-      <yloc>448</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>cargar_nuevos_valores</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>actual</name>
-        <rename/>
-      </field>
-      <field>
-        <name>anterior</name>
-        <rename/>
-      </field>
-      <field>
-        <name>checksum</name>
-        <rename/>
-      </field>
-      <field>
-        <name>fecha_fin</name>
-        <rename/>
-      </field>
-      <field>
-        <name>tag</name>
-        <rename/>
-      </field>
-      <field>
-        <name>id_categoria</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>480</xloc>
-      <yloc>576</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>modificar</name>
-    <type>Update</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_comerciooop</connection>
-    <skip_lookup>N</skip_lookup>
-    <commit>100</commit>
-    <use_batch>N</use_batch>
-    <error_ignored>N</error_ignored>
-    <ignore_flag_field/>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_categoria</table>
-      <key>
-        <name>checksum</name>
-        <field>checksum</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>tag</name>
-        <field>tag</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>actual</name>
-        <field>actual</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>fecha_fin</name>
-        <field>fecha_fin</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>id_categoria</name>
-        <field>id_categoria</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>checksum</name>
-        <rename>checksum</rename>
-      </value>
-      <value>
-        <name>tag</name>
-        <rename>tag</rename>
-      </value>
-      <value>
-        <name>actual</name>
-        <rename>actual</rename>
-      </value>
-      <value>
-        <name>fecha_fin</name>
-        <rename>fecha_fin</rename>
-      </value>
-      <value>
-        <name>id_categoria</name>
-        <rename>id_categoria</rename>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>928</xloc>
-      <yloc>448</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>insertar_categoria_nueva</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_comerciooop</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_categoria</table>
-      <key>
-        <name>actual</name>
-        <field>actual</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>anterior</name>
-        <field>anterior</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>checksum</name>
-        <field>checksum</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>fecha_fin</name>
-        <field>fecha_fin</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>tag</name>
-        <field>tag</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>actual</name>
-        <rename>actual</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>anterior</name>
-        <rename>anterior</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>checksum</name>
-        <rename>checksum</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>fecha_fin</name>
-        <rename>fecha_fin</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>tag</name>
-        <rename>tag</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
+      <xloc>544</xloc>
       <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1660,6 +1087,458 @@ FROM "public".dim_categoria
     <GUI>
       <xloc>928</xloc>
       <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>insertar_categoria_nueva</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dw_comerciooop</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_categoria</table>
+      <key>
+        <name>actual</name>
+        <field>actual</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>anterior</name>
+        <field>anterior</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>checksum</name>
+        <field>checksum</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>fecha_fin</name>
+        <field>fecha_fin</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>tag</name>
+        <field>tag</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>actual</name>
+        <rename>actual</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>anterior</name>
+        <rename>anterior</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>checksum</name>
+        <rename>checksum</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>fecha_fin</name>
+        <rename>fecha_fin</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>tag</name>
+        <rename>tag</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>912</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>insertar_sin_modificar</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>actual</name>
+      </field>
+      <field>
+        <name>anterior</name>
+      </field>
+      <field>
+        <name>checksum</name>
+      </field>
+      <field>
+        <name>fecha_fin</name>
+      </field>
+      <field>
+        <name>tag</name>
+      </field>
+      <field>
+        <name>id_categoria</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>640</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>modificar</name>
+    <type>Update</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dw_comerciooop</connection>
+    <skip_lookup>N</skip_lookup>
+    <commit>100</commit>
+    <use_batch>N</use_batch>
+    <error_ignored>N</error_ignored>
+    <ignore_flag_field/>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_categoria</table>
+      <key>
+        <name>checksum</name>
+        <field>checksum</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>tag</name>
+        <field>tag</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>actual</name>
+        <field>actual</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>fecha_fin</name>
+        <field>fecha_fin</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>id_categoria</name>
+        <field>id_categoria</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>checksum</name>
+        <rename>checksum</rename>
+      </value>
+      <value>
+        <name>tag</name>
+        <rename>tag</rename>
+      </value>
+      <value>
+        <name>actual</name>
+        <rename>actual</rename>
+      </value>
+      <value>
+        <name>fecha_fin</name>
+        <rename>fecha_fin</rename>
+      </value>
+      <value>
+        <name>id_categoria</name>
+        <rename>id_categoria</rename>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>928</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>modificar_anterior</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>checksum_1</name>
+        <rename>checksum</rename>
+      </field>
+      <field>
+        <name>tag_1</name>
+        <rename>tag</rename>
+      </field>
+      <field>
+        <name>anterior</name>
+        <rename>actual</rename>
+      </field>
+      <field>
+        <name>fecha_vigencia</name>
+        <rename>fecha_fin</rename>
+      </field>
+      <field>
+        <name>id_categoria</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>784</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>obtener_fecha_fin_anterior</name>
+    <type>SystemInfo</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>fecha_vigencia</name>
+        <type>today end</type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>448</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>ordenar_ids</name>
+    <type>SortedMerge</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_categoria</name>
+        <ascending>N</ascending>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>640</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>si_categoria_nula</name>
+    <type>IfNull</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <replaceAllByValue/>
+    <replaceAllMask/>
+    <selectFields>Y</selectFields>
+    <selectValuesType>N</selectValuesType>
+    <setEmptyStringAll>N</setEmptyStringAll>
+    <valuetypes>
+      </valuetypes>
+    <fields>
+      <field>
+        <name>tag</name>
+        <value>n/a</value>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>368</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>tabla_existente</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dw_comerciooop</connection>
+    <sql>SELECT
+  id_categoria
+, tag
+FROM "public".dim_categoria
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>id_categoria</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>tabla_existente</origin>
+        <comments>id_categoria</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_PY</date_format_locale>
+        <date_format_timezone>America/Asuncion</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>tag</name>
+        <length>100</length>
+        <precision>-1</precision>
+        <origin>tabla_existente</origin>
+        <comments>tag</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol>.</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>es_PY</date_format_locale>
+        <date_format_timezone>America/Asuncion</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>144</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
