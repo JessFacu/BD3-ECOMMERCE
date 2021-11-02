@@ -4,7 +4,10 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Logical" value="PostgreSQL" />
+   <property key="Logical" value="PlayPen Database" />
+  </data-source>
+  <data-source id="DS2">
+   <property key="Logical" value="PlayPen Database" />
    <property key="Connection Type" value="PostgreSQL" />
    <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/dw_comercio" />
    <property key="UID" value="postgres" />
@@ -15,20 +18,8 @@
    <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
   </data-source>
-  <data-source id="DS0">
-   <property key="Logical" value="PostgreSQL" />
-   <property key="Connection Type" value="PostgreSQL" />
-   <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/dw_comercio" />
-   <property key="UID" value="postgres" />
-   <property key="PWD" value="postgres" />
-   <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
-  </data-source>
-  <data-source id="DS0">
-   <property key="Logical" value="PostgreSQL" />
+  <data-source id="DS2">
+   <property key="Logical" value="PlayPen Database" />
    <property key="Connection Type" value="PostgreSQL" />
    <property key="JDBC URL" value="jdbc:postgresql://localhost:5432/dw_comercio" />
    <property key="UID" value="postgres" />
@@ -41,13 +32,13 @@
   </data-source>
  </project-data-sources>
  <source-databases>
-  <database id="DB0" populated="true" UUID="5abb8b02-e913-4c66-8673-9ab57da158ce" dbcs-ref="DS0" name="PostgreSQL" physicalName="dw_comercio" sql-exception="ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: Couldn&apos;t connect to database: FATAL: la autentificación password falló para el usuario «postgres» (pgjdbc: autodetected server-encoding to be ISO-8859-1, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)" >
+  <database id="DB0" populated="true" UUID="5abb8b02-e913-4c66-8673-9ab57da158ce" dbcs-ref="DS2" name="PlayPen Database" physicalName="dw_comercio" sql-exception="ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: ca.sqlpower.sqlobject.SQLObjectException: Couldn&apos;t connect to database: FATAL: la autentificación password falló para el usuario «postgres» (pgjdbc: autodetected server-encoding to be ISO-8859-1, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)" >
    <catalog id="CAT1" populated="true" UUID="6efd9b9e-72ed-4efc-a9b5-664a8641fd20" name="dw_comercio" nativeTerm="database" physicalName="dw_comercio" >
    </catalog>
    <relationships>
    </relationships>
   </database>
-  <database id="DB2" populated="true" UUID="d1c250b8-a6e5-4e21-904f-bf23281f82a9" dbcs-ref="DS0" name="PostgreSQL" physicalName="PostgreSQL" >
+  <database id="DB2" populated="true" UUID="d1c250b8-a6e5-4e21-904f-bf23281f82a9" dbcs-ref="DS2" name="PlayPen Database" physicalName="PostgreSQL" >
    <catalog id="CAT3" populated="true" UUID="49936c01-01a4-45b5-a9b4-17b70df94b6d" name="eCommerce_2" nativeTerm="database" physicalName="eCommerce_2" >
     <schema id="SCH4" populated="false" UUID="3423abf3-066c-4ea1-8a7f-65f128f5fe4a" name="information_schema" nativeTerm="schema" physicalName="information_schema" >
     </schema>
@@ -271,7 +262,7 @@
   <table id="TAB65" populated="true" UUID="bf3cb8b3-e565-48e3-ad8a-c19c6d961965" name="dim_color" objectType="TABLE" physicalName="dim_color" >
    <remarks></remarks>
    <folder id="FOLTAB651" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL66" populated="true" UUID="19de1e9c-0172-4e2f-bc37-653552b23d72" autoIncrement="true" autoIncrementSequenceName="dim_color_id_color_seq" defaultValue="" name="id_color" nullable="0" physicalName="id_color" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL66" populated="true" UUID="19de1e9c-0172-4e2f-bc37-653552b23d72" autoIncrement="true" autoIncrementSequenceName="dim_color_id_color_seq_1" defaultValue="" name="id_color" nullable="0" physicalName="id_color" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     <column id="COL67" populated="true" UUID="0b146277-35b6-4837-8e18-2d6a615673b4" autoIncrement="false" defaultValue="" name="descripcion_color" nullable="0" physicalName="descripcion_color" precision="100" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
@@ -383,23 +374,23 @@
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
  <play-pen zoom="0.9999999999999997" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
-  <table-pane table-ref="TAB8" x="523" y="20" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB17" x="61" y="262" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB26" x="101" y="403" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB33" x="64" y="574" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB40" x="914" y="408" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB45" x="975" y="535" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB52" x="461" y="400" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB65" x="72" y="509" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB70" x="198" y="125" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB76" x="800" y="105" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB8" x="530" y="20" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB17" x="44" y="172" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB26" x="20" y="333" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB33" x="102" y="504" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB40" x="921" y="408" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB45" x="982" y="535" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB52" x="468" y="400" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB65" x="40" y="429" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB70" x="303" y="146" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB76" x="807" y="105" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-link relationship-ref="REL87" pkConnection="0.47950819672131145" fkConnection="0.6026936026936027" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL89" pkConnection="0.898989898989899" fkConnection="0.2964426877470356" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL91" pkConnection="0.49295774647887325" fkConnection="0.2490118577075099" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL97" pkConnection="0.49411764705882355" fkConnection="0.6996047430830039" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="18"/>
-  <table-link relationship-ref="REL95" pkConnection="0.49122807017543857" fkConnection="0.1422924901185771" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="18"/>
-  <table-link relationship-ref="REL93" pkConnection="0.49295774647887325" fkConnection="0.8260869565217391" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL99" pkConnection="0.49122807017543857" fkConnection="0.541501976284585" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL89" pkConnection="0.898989898989899" fkConnection="0.0" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="129"/>
+  <table-link relationship-ref="REL91" pkConnection="0.49411764705882355" fkConnection="0.26627218934911245" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL97" pkConnection="0.2" fkConnection="0.8994082840236687" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL95" pkConnection="0.49122807017543857" fkConnection="0.21301775147928995" rLineColor="0xe41a1c" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL93" pkConnection="0.11764705882352941" fkConnection="0.6568047337278107" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL99" pkConnection="0.8245614035087719" fkConnection="0.33727810650887574" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
   <table-link relationship-ref="REL101" pkConnection="0.8952380952380953" fkConnection="0.07407407407407407" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
   <table-link relationship-ref="REL103" pkConnection="0.051643192488262914" fkConnection="0.8821548821548821" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
  </play-pen>

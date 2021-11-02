@@ -565,6 +565,66 @@
     </GUI>
   </step>
   <step>
+    <name>Comparar_tabla_con_csv</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>tabla_existente</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>Abreviatura</name>
+        <field>cod_moneda</field>
+      </key>
+      <value>
+        <name>id_moneda</name>
+        <rename>id_moneda</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>simbolo</name>
+        <rename>simbolo</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>cod_moneda</name>
+        <rename>cod_moneda</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>descripcion_moneda</name>
+        <rename>descripcion_moneda</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>256</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>MONEDAS_DEL_MUNDO</name>
     <type>CsvInput</type>
     <description/>
@@ -639,8 +699,8 @@
     </GUI>
   </step>
   <step>
-    <name>Comparar_tabla_con_csv</name>
-    <type>StreamLookup</type>
+    <name>filtrar_existentes</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -649,41 +709,28 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>tabla_existente</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>Abreviatura</name>
-        <field>cod_moneda</field>
-      </key>
-      <value>
-        <name>id_moneda</name>
-        <rename>id_moneda</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>simbolo</name>
-        <rename>simbolo</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>cod_moneda</name>
-        <rename>cod_moneda</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>descripcion_moneda</name>
-        <rename>descripcion_moneda</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
+    <send_true_to>modificar</send_true_to>
+    <send_false_to>modificar</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <conditions>
+          <condition>
+            <negated>N</negated>
+            <leftvalue>id_moneda</leftvalue>
+            <function>IS NOT NULL</function>
+            <rightvalue/>
+          </condition>
+          <condition>
+            <negated>N</negated>
+            <operator>AND</operator>
+            <leftvalue>cod_moneda</leftvalue>
+            <function>=</function>
+            <rightvalue>Abreviatura</rightvalue>
+          </condition>
+        </conditions>
+      </condition>
+    </compare>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -693,8 +740,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
-      <yloc>208</yloc>
+      <xloc>464</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -709,7 +756,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>cargar_valores</send_true_to>
+    <send_true_to>insertar_REGISTRO_NUEVO</send_true_to>
     <send_false_to>filtrar_existentes</send_false_to>
     <compare>
       <condition>
@@ -795,6 +842,63 @@
     <GUI>
       <xloc>720</xloc>
       <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>modificar</name>
+    <type>Update</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>dw_comercioop</connection>
+    <skip_lookup>N</skip_lookup>
+    <commit>100</commit>
+    <use_batch>N</use_batch>
+    <error_ignored>N</error_ignored>
+    <ignore_flag_field/>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_moneda</table>
+      <key>
+        <name>Abreviatura</name>
+        <field>cod_moneda</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_moneda</name>
+        <rename>id_moneda</rename>
+      </value>
+      <value>
+        <name>simbolo</name>
+        <rename>Símbolo</rename>
+      </value>
+      <value>
+        <name>cod_moneda</name>
+        <rename>Abreviatura</rename>
+      </value>
+      <value>
+        <name>descripcion_moneda</name>
+        <rename>DESC_MONEDA</rename>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>736</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -928,110 +1032,6 @@ FROM "public".dim_moneda
     <GUI>
       <xloc>48</xloc>
       <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>modificar</name>
-    <type>Update</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>dw_comercioop</connection>
-    <skip_lookup>N</skip_lookup>
-    <commit>100</commit>
-    <use_batch>N</use_batch>
-    <error_ignored>N</error_ignored>
-    <ignore_flag_field/>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_moneda</table>
-      <key>
-        <name>Abreviatura</name>
-        <field>cod_moneda</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id_moneda</name>
-        <rename>id_moneda</rename>
-      </value>
-      <value>
-        <name>simbolo</name>
-        <rename>Símbolo</rename>
-      </value>
-      <value>
-        <name>cod_moneda</name>
-        <rename>Abreviatura</rename>
-      </value>
-      <value>
-        <name>descripcion_moneda</name>
-        <rename>DESC_MONEDA</rename>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>736</xloc>
-      <yloc>416</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>filtrar_existentes</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to>modificar</send_true_to>
-    <send_false_to/>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <conditions>
-          <condition>
-            <negated>N</negated>
-            <leftvalue>id_moneda</leftvalue>
-            <function>IS NOT NULL</function>
-            <rightvalue/>
-          </condition>
-          <condition>
-            <negated>N</negated>
-            <operator>AND</operator>
-            <leftvalue>cod_moneda</leftvalue>
-            <function>=</function>
-            <rightvalue>Abreviatura</rightvalue>
-          </condition>
-        </conditions>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>464</xloc>
-      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
